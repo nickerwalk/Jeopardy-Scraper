@@ -7,7 +7,6 @@ request('http://www.j-archive.com/showgame.php?game_id=6274', function (error, r
     $('td.clue').each(function(){
       let clue = $(this).find('.clue_text').text();
       let value = $(this).find('table.clue_header td.clue_value').text();
-      let isDailyDouble = value === "";
       let div = $(this).find('div').attr('onmouseover');
       let answer = "";
       if(div !== undefined){
@@ -15,6 +14,7 @@ request('http://www.j-archive.com/showgame.php?game_id=6274', function (error, r
         let answerEnd = div.indexOf('</em>');
         answer = div.substr(answerStart, (answerEnd - answerStart));
       }
+      let isDailyDouble = answer !== "" && value === "";
       let isFinalJeopardy = answer === "" && value === "";
       let json = {
         "clue": clue, 
