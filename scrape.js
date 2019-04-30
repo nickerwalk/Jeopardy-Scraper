@@ -6,14 +6,23 @@ request('http://www.j-archive.com/showgame.php?game_id=6274', function (error, r
     var $ = cheerio.load(html);
     $('td.clue').each(function(){
       let clue = $(this).find('.clue_text').text();
-      let div = $(this).find('div');
+      let value = $(this).find('table.clue_header td.clue_value').text();
+      let isDailyDouble = value === "";
+      let div = $(this).find('div').attr('onmouseover');
       let answer = "";
-      if(div){
-        let answerStart = div.attr('onmouseover').indexOf('<em class="correct_response">') + 29;
-        let answerEnd = div.attr('onmouseover').indexOf('</em>');
-        answer = div.attr('onmouseover').substr(answerStart, (answerEnd - answerStart));
+      if(div !== undefined){
+        let answerStart = div.indexOf('<em class="correct_response">') + 29;
+        let answerEnd = div.indexOf('</em>');
+        answer = div.substr(answerStart, (answerEnd - answerStart));
       }
-      let json = {"clue": clue, "answer": answer};
+      let isFinalJeopardy = answer === "" && value === "";
+      let json = {
+        "clue": clue, 
+        "answer": answer, 
+        "value": value, 
+        "dailydouble": isDailyDouble,
+        "finaljeopardy": isFinalJeopardy
+      };
       console.log(json);
     });
   }
