@@ -8,10 +8,10 @@ Install Yarn:
 
 https://yarnpkg.com/en/docs/install#windows-stable
 
-Run the following command to get the packages neccessary for the project
+Run the following command to get the packages neccessary for the project:
 
 yarn install
 
-Execute the project by executing the following command
+Execute the project by executing the following command:
 
-node scrape.js
+node jeopardy.js
